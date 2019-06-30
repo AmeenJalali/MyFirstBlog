@@ -1,0 +1,10 @@
+main {
+    margin: 5em 0;
+}
+
+.btn-xs {
+    padding: .25rem .4rem !important;
+    font-size: .875rem !important;
+    line-height: .5 !important;
+    border-radius: .2rem !important;
+}
