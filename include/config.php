@@ -2,17 +2,21 @@
 
     require_once 'include/database.php';
 
+
+    /////////// Database //////////
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'blog');
+    define('DB_USER', 'blog');
+    define('DB_PASS', 'Blog()123');
+    ///////////////////////////////
+
+
     date_default_timezone_set('Asia/Tehran');
     ini_set('display_errors', 'On');
 
     define('ROOT', "http://localhost/~amin/blog/");
     define('ADMIN_PATH', "http://localhost/~amin/blog/admin/");
     define('THEME_ROOT', ROOT . 'theme' . "/");
-
-    define('DB_HOST', 'localhost');
-    define('DB_NAME', 'blog');
-    define('DB_USER', 'blog');
-    define('DB_PASS', 'Blog()123');
 
     define('BLOG_NAME', get_blog_name());
 
