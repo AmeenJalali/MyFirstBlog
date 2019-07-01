@@ -1,21 +1,30 @@
 <?php
 namespace src\controllers;
+
 use src\core\Controller;
+use src\models\CommentModel;
+use src\models\PostModel;
 
 session_start();
 
 class Posts extends Controller {
 
     public function index() {
-//        header("location: " . ROOT);
-//        exit;
+        header("location: " . ROOT);
+        exit;
     }
 
-    public function viewpost($postID) {
-        $posts = $this->model('PostModel');
+    public function viewpost($postID = -1) {
+        $posts = new PostModel();
         $post = $posts->get_post_by_id($postID);
 
-        $comment = $this->model('CommentModel');
+        if (sizeof($post) == 0) {
+            // TODO -> 404 error
+           header("location: " . ROOT);
+           exit;
+        }
+
+        $comment = new CommentModel();
 
         $errors = "";
         $success = "";
@@ -60,13 +69,14 @@ class Posts extends Controller {
         $this->view('posts/index', ['title' => $title, 'post' => $post, 'comments' => $comments, 'errors' => $errors, 'success' => $success]);
     }
 
+
     public function deleteComment($commentID = '-1') {
         if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] == false) {
             header("location: " . ADMIN_PATH . "login");
             exit;
         }
         if ($commentID != -1) {
-            $comments = $this->model('CommentModel');
+            $comments = new CommentModel();
             $comments->delete_comment_by_id($commentID);
         }
     }

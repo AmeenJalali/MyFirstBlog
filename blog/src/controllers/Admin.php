@@ -1,6 +1,10 @@
 <?php
 namespace src\controllers;
+
 use src\core\Controller;
+use src\models\CommentModel;
+use src\models\PostModel;
+use src\models\UserModel;
 
 session_start();
 
@@ -12,10 +16,10 @@ class Admin extends Controller {
             exit;
         }
 
-        $post = $this->model('PostModel');
+        $post = new PostModel();
         $posts = $post->get_all_posts();
 
-        $comment = $this->model('CommentModel');
+        $comment = new CommentModel();
         $comments = $comment->get_all_comments();
 
 
@@ -34,7 +38,7 @@ class Admin extends Controller {
 
         if ($_SERVER["REQUEST_METHOD"] === 'POST') {
             if (isset($_POST['publish'])) {
-                $post = $this->model('PostModel');
+                $post = new PostModel();
                 if(htmlspecialchars($_POST['post_description']) == "") {
                     $errors .= "Description can't be empty <br>";
                 }
@@ -65,7 +69,7 @@ class Admin extends Controller {
             exit;
         }
         if ($postID != -1) {
-            $posts = $this->model('PostModel');
+            $posts = new PostModel();
             $posts->delete_post_by_id($postID);
         }
         header("location: " . ADMIN_PATH);
@@ -78,7 +82,7 @@ class Admin extends Controller {
             exit;
         }
         if ($postID != -1) {
-            $posts = $this->model('PostModel');
+            $posts = new PostModel();
             $errors = "";
             $success = "";
 
@@ -133,7 +137,7 @@ class Admin extends Controller {
                 $username = validate($_POST["admin_username"]);
                 $password = validate($_POST["admin_password"]);
 
-                $admin = $this->model('UserModel');
+                $admin = new UserModel();
                 $is_valid = $admin->check_username_and_password($username, $password);
 
                 if($is_valid) {

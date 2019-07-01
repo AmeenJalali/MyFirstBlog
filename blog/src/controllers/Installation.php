@@ -1,10 +1,11 @@
 <?php
 namespace src\controllers;
 use src\core\Controller;
+use src\models\InstallationModel;
 
 class Installation extends Controller {
     public function index() {
-        $installation = $this->model('InstallationModel');
+        $installation = new InstallationModel();
         $error = "";
 
         if (!$installation->installed()) {
@@ -12,7 +13,6 @@ class Installation extends Controller {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if (isset($_POST['install'])) {
-
 
                         $blog_name = validate($_POST['blog_name']);
                         if (!preg_match('/^[a-zA-Z0-9\s]+$/', $blog_name)) {

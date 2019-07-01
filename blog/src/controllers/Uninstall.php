@@ -1,10 +1,11 @@
 <?php
 namespace src\controllers;
 use src\core\Controller;
+use src\models\InstallationModel;
 
 class Uninstall extends Controller {
     public function index() {
-        $installation = $this->model('InstallationModel');
+        $installation = new InstallationModel();
 
         if ($installation->installed() && file_exists('uninstall.php')) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {

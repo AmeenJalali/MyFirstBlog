@@ -14,7 +14,7 @@ class Routing
         $this->params = [];
     }
 
-    public function route() {
+    public function route() : void {
         if (file_exists('install.php')) {
             $this->switchToInstallationController();
             exit;
@@ -38,8 +38,7 @@ class Routing
         }
     }
 
-    public function switchToInstallationController(): void
-    {
+    public function switchToInstallationController(): void {
         $this->controller = 'installation';
         $this->method = 'index';
         $this->initController();
@@ -71,7 +70,7 @@ class Routing
         return $url;
     }
 
-    public function checkAndSetParameters(array $url) {
+    public function checkAndSetParameters(array $url) : void {
         $this->params = $url ? array_values($url) : [];
     }
 }
