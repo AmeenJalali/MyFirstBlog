@@ -1,6 +1,5 @@
 <?php
-    require_once 'blog/autoloader.php';
+    require_once 'vendor/autoload.php';
 
     use src\core\Routing;
-
     $blog = new Routing;

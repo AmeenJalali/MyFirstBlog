@@ -1,0 +1,20 @@
+{
+    "name": "blog/blog",
+    "description": "This is my first blog system coded by me.",
+    "authors": [
+        {
+            "name": "AmeenJalali",
+            "email": "jalali.ameen@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "src\\": "blog/src/"
+        },
+        "files": [
+            "include/database.php",
+            "include/config.php"
+        ]
+    }
+}

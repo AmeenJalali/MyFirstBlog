@@ -7,7 +7,6 @@ function get_connection() {
     } catch (mysqli_sql_exception $e) {
         echo("Unfortunately, the details you entered for connection are incorrect!");
     }
-    echo DB_PASS;
 }
 
 function create_database_connection($connection) {
@@ -42,14 +41,7 @@ function run_sql_with_return($sql)
             die(mysqli_error($connection));
         }
 
-//        $fetchValues = mysqli_fetch_fields($query);
-//
-//        $fetch = mysqli_fetch_assoc($query);
-//        close_database_connection($connection);
-
-
         $data = array();
-
         $result = $connection->query($sql);
 
         if ($result->num_rows > 0) {
@@ -59,26 +51,7 @@ function run_sql_with_return($sql)
                $i++;
            }
         }
-
         return $data;
-
-
-//        if (mysqli_num_rows($query) > 0) {
-//            while($row = mysqli_fetch_assoc($query)){
-//                $data[] = $row;
-//            }
-////            while($totalRows = mysqli_fetch_array($query))
-////            {
-////                for($eachRecord = 0; $eachRecord < count($fetchValues);$eachRecord++)
-////                {
-////                    return $totalRows[$eachRecord] . "<br>";
-////                }
-////            }
-//            return $data;
-//        } else {
-//            return null;
-//        }
-
     } else {
         return null;
     }

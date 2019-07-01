@@ -1,7 +1,5 @@
 <?php
 
-    require_once 'include/database.php';
-
 
     /////////// Database //////////
     define('DB_HOST', 'localhost');
