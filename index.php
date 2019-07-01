@@ -3,3 +3,4 @@
 
     use src\core\Routing;
     $blog = new Routing;
+    $blog->route();

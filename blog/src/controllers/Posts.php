@@ -7,8 +7,8 @@ session_start();
 class Posts extends Controller {
 
     public function index() {
-        header("location: " . ROOT);
-        exit;
+//        header("location: " . ROOT);
+//        exit;
     }
 
     public function viewpost($postID) {

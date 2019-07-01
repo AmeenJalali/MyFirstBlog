@@ -47,7 +47,7 @@ class Admin extends Controller {
                     $title = htmlspecialchars($_POST['post_title']);
                     $post->new_post($title, $description);
                     $success .= "The post added successfully! <br>";
-                    header( "refresh:2; url=" . ADMIN_PATH );
+                    header( "refresh:1 ; url=" . ADMIN_PATH );
                 } else {
                     $errors .= "An error occurred, please try again <br>";
                 }
@@ -96,7 +96,7 @@ class Admin extends Controller {
                         $title = htmlspecialchars($_POST['post_title']);
                         $posts->edit_post($postID, $title, $description);
                         $success .= "The post edited successfully! <br>";
-                        header( "refresh:2; url=" . ADMIN_PATH );
+                        header( "refresh:1 ; url=" . ADMIN_PATH );
                     } else {
                         $errors .= "An error occurred, please try again <br>";
                     }
