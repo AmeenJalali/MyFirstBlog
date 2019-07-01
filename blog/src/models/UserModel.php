@@ -1,5 +1,5 @@
 <?php
-
+namespace src\models;
 class UserModel {
 
     public function check_username_and_password($username, $password): bool {

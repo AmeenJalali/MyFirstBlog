@@ -1,7 +1,8 @@
 <?php
+namespace src\controllers;
+use src\core\Controller;
 
 session_start();
-
 
 class Admin extends Controller {
 

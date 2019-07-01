@@ -1,8 +1,8 @@
 <?php
+namespace src\controllers;
+use src\core\Controller;
 
 session_start();
-
-require_once 'include/config.php';
 
 class Posts extends Controller {
 

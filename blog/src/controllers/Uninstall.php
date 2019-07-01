@@ -1,11 +1,6 @@
 <?php
-
-require_once 'include/config.php';
-
-function validate($input) {
-    return trim(htmlspecialchars($input));
-}
-
+namespace src\controllers;
+use src\core\Controller;
 
 class Uninstall extends Controller {
     public function index() {
@@ -29,4 +24,8 @@ class Uninstall extends Controller {
         $this->view('installation/uninstall', ['errors' => '', 'title' => $title]);
     }
 
+}
+
+function validate($input) {
+    return trim(htmlspecialchars($input));
 }

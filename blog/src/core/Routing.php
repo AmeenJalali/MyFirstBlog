@@ -1,4 +1,5 @@
 <?php
+namespace src\core;
 
 class Routing
 {
@@ -12,22 +13,21 @@ class Routing
         if (file_exists('install.php')) {
             $this->controller = 'installation';
             $this->method = 'index';
-            require_once 'blog/controllers/' . $this->controller . '.php';
-            $this->controller = new $this->controller;
+            $className = "src\controllers\\" . $this->controller;
+            $this->controller = new $className;
             call_user_func_array([$this->controller, $this->method], $this->params);
             exit;
         }
 
         $url = $this->parseUrl();
-        if (file_exists("blog/controllers/$url[0].php")) {
+
+        if (file_exists("blog/src/controllers/$url[0].php")) {
             $this->controller = $url[0];
             unset($url[0]);
         }
 
-
-        require_once 'blog/controllers/' . $this->controller . '.php';
-
-        $this->controller = new $this->controller;
+        $className = "src\controllers\\" . $this->controller;
+        $this->controller = new $className;
 
         if (isset($url[1])) {
             if (method_exists($this->controller, $url[1])) {
