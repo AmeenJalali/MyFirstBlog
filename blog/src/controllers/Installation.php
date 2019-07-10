@@ -49,13 +49,12 @@ class Installation extends Controller {
                         }
                     }
                 }
-        $title = "Blog Installation";
         } else {
             header("Location: " . CONFIG['ROOT']);
             exit;
         }
 
-        $this->view('installation/index', ['errors' => $error, 'title' => $title]);
+        $this->twig_render('installation/index', ['errors' => $error]);
     }
 
 }

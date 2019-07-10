@@ -18,13 +18,12 @@ class Uninstall extends Controller {
                     header("location: " . CONFIG['ROOT']);
                     exit;
             }
-            $title = "Blog Removal";
         } else {
             header("Location: " . CONFIG['ROOT']);
             exit;
         }
 
-        $this->view('installation/uninstall', ['errors' => '', 'title' => $title]);
+        $this->twig_render('installation/uninstall');
     }
 
 }

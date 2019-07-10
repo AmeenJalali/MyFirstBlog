@@ -3,31 +3,33 @@ namespace src\controllers;
 
 use src\core\Controller;
 use src\models\CommentModel;
-use src\models\PostModel;
+use src\views\CommentView;
+use src\views\PostView;
 
 session_start();
 
 class Posts extends Controller {
 
     public function index() {
-        header("location: " . ROOT);
+        header("location: " . CONFIG['ROOT']);
         exit;
     }
 
     public function viewpost($postID = -1) {
-        $posts = new PostModel();
-        $post = $posts->get_post_by_id($postID);
+
+        $postView = new PostView();
+        $commentModel = new CommentModel();
+        $commentView = new CommentView();
+        $post = $postView->get_post_by_id($postID);
+        $errors = "";
+        $success = "";
+
 
         if (sizeof($post) == 0) {
             // TODO -> 404 error
-           header("location: " . ROOT);
+           header("location: " . CONFIG['ROOT']);
            exit;
         }
-
-        $comment = new CommentModel();
-
-        $errors = "";
-        $success = "";
 
         if ($_SERVER["REQUEST_METHOD"] === 'POST') {
             if (isset($_POST['send'])) {
@@ -53,7 +55,7 @@ class Posts extends Controller {
                     $description = htmlspecialchars($_POST['comment_description']);
                     $name = htmlspecialchars($_POST['comment_author']);
                     $email = htmlspecialchars($_POST['comment_email']);
-                    $comment->new_comment($name, $email, $description, $postID);
+                    $commentModel->new_comment($name, $email, $description, $postID);
                     $success .= "Your comment sent successfully! <br>";
                 } else {
                     $errors .= "An error occurred, please try again <br>";
@@ -62,24 +64,22 @@ class Posts extends Controller {
             }
         }
 
-        $comments = $comment->get_all_comments_by_post_id($postID);
-
-        $title = $post[0]['post_title'];
+        $comments = $commentView->get_all_comments_by_postid($postID);
 
         $post = $post[0];
 
-        $this->view('posts/index', ['title' => $title, 'post' => $post, 'comments' => $comments, 'errors' => $errors, 'success' => $success]);
+        $this->twig_render('posts/index', ['post' => $post, 'comments' => $comments, 'errors' => $errors, 'success' => $success]);
     }
 
 
     public function deleteComment($commentID = '-1') {
         if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] == false) {
-            header("location: " . ADMIN_PATH . "login");
+            header("location: " . CONFIG['ADMIN_LOGIN_PATH']);
             exit;
         }
         if ($commentID != -1) {
-            $comments = new CommentModel();
-            $comments->delete_comment_by_id($commentID);
+            $commentModel = new CommentModel();
+            $commentModel->delete_comment_by_id($commentID);
         }
     }
 

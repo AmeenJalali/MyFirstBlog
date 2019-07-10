@@ -26,11 +26,6 @@ class InstallationModel {
         run_sql($sql);
     }
 
-    public function get_blog_name() {
-        $sql = "select blog_name from settings where blog_id=1;";
-        run_sql_with_return($sql);
-    }
-
     public function installed(): bool {
         $sql = 'select count(*) from settings where blog_id=1;';
         return sql_count($sql) != 0;

@@ -2,9 +2,10 @@
 namespace src\controllers;
 
 use src\core\Controller;
-use src\models\CommentModel;
 use src\models\PostModel;
 use src\models\UserModel;
+use src\views\CommentView;
+use src\views\PostView;
 
 session_start();
 
@@ -16,15 +17,13 @@ class Admin extends Controller {
             exit;
         }
 
-        $post = new PostModel();
-        $posts = $post->get_all_posts();
+        $postView = new PostView();
+        $commentView = new CommentView();
 
-        $comment = new CommentModel();
-        $comments = $comment->get_all_comments();
+        $posts = $postView->get_all_posts();
+        $comments = $commentView->get_all_comments();
 
-        $title = 'Administrator panel';
-
-        $this->view('admin/index', ['title' => $title, 'posts' => $posts, 'comments' => $comments]);
+        $this->twig_render('admin/index', ['posts' => $posts, 'comments' => $comments]);
     }
 
     public function newpost() {
@@ -38,7 +37,7 @@ class Admin extends Controller {
 
         if ($_SERVER["REQUEST_METHOD"] === 'POST') {
             if (isset($_POST['publish'])) {
-                $post = new PostModel();
+                $postModel = new PostModel();
                 if(htmlspecialchars($_POST['post_description']) == "") {
                     $errors .= "Description can't be empty <br>";
                 }
@@ -49,7 +48,7 @@ class Admin extends Controller {
                 if ($errors == "") {
                     $description = htmlspecialchars($_POST['post_description']);
                     $title = htmlspecialchars($_POST['post_title']);
-                    $post->new_post($title, $description);
+                    $postModel->new_post($title, $description);
                     $success .= "The post added successfully! <br>";
                     header( "refresh:1 ; url=" . CONFIG['ADMIN_PATH'] );
                 } else {
@@ -59,8 +58,7 @@ class Admin extends Controller {
             }
         }
 
-        $title = 'New post';
-        $this->view('admin/new_post', ['title' => $title, 'errors' => $errors, 'success' => $success]);
+        $this->twig_render('admin/new_post', ['errors' => $errors, 'success' => $success]);
     }
 
     public function deletePost($postID = '-1') {
@@ -69,8 +67,8 @@ class Admin extends Controller {
             exit;
         }
         if ($postID != -1) {
-            $posts = new PostModel();
-            $posts->delete_post_by_id($postID);
+            $postModel = new PostModel();
+            $postModel->delete_post_by_id($postID);
         }
         header("location: " . CONFIG['ADMIN_PATH']);
         exit;
@@ -82,7 +80,8 @@ class Admin extends Controller {
             exit;
         }
         if ($postID != -1) {
-            $posts = new PostModel();
+            $postModel = new PostModel();
+            $postView = new PostView();
             $errors = "";
             $success = "";
 
@@ -98,7 +97,7 @@ class Admin extends Controller {
                     if ($errors == "") {
                         $description = htmlspecialchars($_POST['post_description']);
                         $title = htmlspecialchars($_POST['post_title']);
-                        $posts->edit_post($postID, $title, $description);
+                        $postModel->edit_post($postID, $title, $description);
                         $success .= "The post edited successfully! <br>";
                         header( "refresh:1 ; url=" . CONFIG['ADMIN_PATH'] );
                     } else {
@@ -108,10 +107,9 @@ class Admin extends Controller {
                 }
             }
 
-            $post = $posts->get_post_by_id($postID);
+            $post = $postView->get_post_by_id($postID);
             $post = $post[0];
-            $title = 'Edit post';
-            $this->view('admin/edit_post', ['title' => $title, 'post' => $post, 'errors' => $errors, 'success' => $success]);
+            $this->twig_render('admin/edit_post', ['post' => $post, 'errors' => $errors, 'success' => $success]);
 
         } else {
             header("location: " . CONFIG['ADMIN_PATH']);
@@ -138,8 +136,8 @@ class Admin extends Controller {
                 $username = validate($_POST["admin_username"]);
                 $password = validate($_POST["admin_password"]);
 
-                $admin = new UserModel();
-                $is_valid = $admin->check_username_and_password($username, $password);
+                $userModel = new UserModel();
+                $is_valid = $userModel->user_is_valid($username, $password);
 
                 if($is_valid) {
                     $_SESSION["logged_in"] = true;
@@ -152,8 +150,7 @@ class Admin extends Controller {
                 }
             }
         }
-        $title = 'Log in to administrator';
-        $this->view('admin/login', ['title' => $title, 'errors' => $errors]);
+        $this->twig_render('admin/login', ['errors' => $errors]);
     }
 }
 
