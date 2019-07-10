@@ -1,10 +1,9 @@
-<?php
-$title = $data['title'];
-$blog_name = $title;
-require 'theme/header.php';
-?>
+{% extends 'base.html.twig' %}
 
-<main>
+{% block title %}Blog installation{% endblock %}
+
+
+{% block main %}
     <div class="container">
         <h2 class="text-center">Are you sure you want to delete this blog?</h2>
         <form class="form-horizontal" action="" method="post">
@@ -14,18 +13,11 @@ require 'theme/header.php';
                 </div>
             </div>
         </form>
-        <?php
-        if ($data['errors'] != "") {
-            echo "<div class=\"alert alert-danger\" role=\"alert\">";
-            echo $data['errors'];
-            echo "</div>";
-        }
-
-        ?>
-
+        {% autoescape false %}
+            {% if errors|length != 0 %}
+                <div class="alert alert-danger" role="alert">{{ errors }}</div>
+            {% endif %}
+        {% endautoescape %}
 
     </div>
-</main>
-
-
-<?php require 'theme/footer.php' ?>
+{% endblock %}

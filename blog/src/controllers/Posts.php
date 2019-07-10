@@ -64,7 +64,9 @@ class Posts extends Controller {
 
         $comments = $comment->get_all_comments_by_post_id($postID);
 
-        $title = $post[0]['post_title'] . " | " . BLOG_NAME;
+        $title = $post[0]['post_title'];
+
+        $post = $post[0];
 
         $this->view('posts/index', ['title' => $title, 'post' => $post, 'comments' => $comments, 'errors' => $errors, 'success' => $success]);
     }

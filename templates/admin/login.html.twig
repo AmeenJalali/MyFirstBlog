@@ -1,12 +1,13 @@
-<?php
-$title = $data['title'];
-require 'theme/header.php';
-?>
+{% extends 'base.html.twig' %}
 
-<main>
+{% set title = "Login to administrator panel" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block main %}
+
     <div class="container">
-        <h2 class="text-center">Log in to administrator panel</h2>
-        <br><br><br><br>
+        <h2 class="text-center">{{ title }}</h2>
+        <br>
         <div class="offset-sm-3 col-sm-6">
             <form class="form-horizontal" action="" method="post">
 
@@ -31,15 +32,16 @@ require 'theme/header.php';
                 </div>
 
             </form>
-            <?php
-            if ($data['errors'] != "") {
-                echo "<div class=\"alert alert-danger\" role=\"alert\">";
-                echo $data['errors'];
-                echo "</div>";
-            }
-            ?>
-        </div>
 
+            {% autoescape false %}
+                {% if errors|length != 0 %}
+                    <div class="alert alert-danger" role="alert">{{ errors }}</div>
+
+                {% endif %}
+            {% endautoescape %}
+
+        </div>
     </div>
-</main>
-<?php require 'theme/footer.php' ?>
+
+
+{% endblock %}

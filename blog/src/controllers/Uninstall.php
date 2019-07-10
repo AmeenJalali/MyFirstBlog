@@ -3,6 +3,8 @@ namespace src\controllers;
 use src\core\Controller;
 use src\models\InstallationModel;
 
+session_start();
+
 class Uninstall extends Controller {
     public function index() {
         $installation = new InstallationModel();
@@ -13,12 +15,12 @@ class Uninstall extends Controller {
                     $_SESSION = array();
                     session_destroy();
                     rename('uninstall.php', 'install.php');
-                    header("location: " . ROOT);
+                    header("location: " . CONFIG['ROOT']);
                     exit;
             }
             $title = "Blog Removal";
         } else {
-            header("Location: " . ROOT);
+            header("Location: " . CONFIG['ROOT']);
             exit;
         }
 

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ CONFIG.BLOG_NAME }}{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+        <h2 class="text-center">Last posts</h2>
+
+        {% if posts|length == 0 %}
+            No posts found
+        {% else %}
+            {% for post in posts %}
+            <div>
+                <p><h3> <a href="{{ CONFIG.ROOT }}/posts/viewpost/{{ post.post_id }}">{{ post.post_title }}</a></h3></p>
+                <div class="row text-secondary">
+                    <div class="col-2"><p><i class="far fa-clipboard"></i> Post id: {{ post.post_id }}</div>
+                    <div class="col-10"><i class="far fa-calendar-alt"></i> Published date: &nbsp {{ post.post_published_date }}</div></p>
+                </div>
+                <p> {{ post.post_description|slice(0,700) }} </p>
+                <i class="fas fa-angle-right"></i> <a href="{{ CONFIG.ROOT }}/posts/viewpost/{{ post.post_id }}">Read more</a>
+                <hr>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}
+

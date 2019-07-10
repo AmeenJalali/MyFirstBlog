@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block main_header %}
+<div class="container">
+
+    <h2 class="text-center">{% block title %}{% endblock %}</h2>
+    <h6 class="text-center">Hi, {{ SESSION.username }}! | <a href="{{ CONFIG.ADMIN_PATH }}/logout">Sign out</a></h6>
+
+    <p class="text-center"><a href="{{ CONFIG.ADMIN_PATH }}/newPost"><button class="btn btn-primary btn-md">New Post</button></a>
+        <a href="{{ CONFIG.ROOT }}/uninstall" class="btn btn-md btn-danger">Uninstall Blog</a>
+    </p>
+</div>
+{% endblock %}

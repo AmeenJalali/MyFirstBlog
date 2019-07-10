@@ -3,6 +3,8 @@ namespace src\controllers;
 use src\core\Controller;
 use src\models\InstallationModel;
 
+session_start();
+
 class Installation extends Controller {
     public function index() {
         $installation = new InstallationModel();
@@ -40,7 +42,7 @@ class Installation extends Controller {
                             $installation->create_admin($admin_username, $admin_email, $admin_password);
 
                             rename('install.php', 'uninstall.php');
-                            header("location: " . ROOT . "admin");
+                            header("location: " .  CONFIG['ADMIN_PATH']);
                             exit;
                         } else {
                             $error .= 'Installation faild' . "<br>";
@@ -49,7 +51,7 @@ class Installation extends Controller {
                 }
         $title = "Blog Installation";
         } else {
-            header("Location: " . ROOT);
+            header("Location: " . CONFIG['ROOT']);
             exit;
         }
 

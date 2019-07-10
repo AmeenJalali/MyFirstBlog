@@ -12,11 +12,15 @@
     date_default_timezone_set('Asia/Tehran');
     ini_set('display_errors', 'On');
 
-    define('ROOT', "http://localhost/~amin/blog/");
-    define('ADMIN_PATH', "http://localhost/~amin/blog/admin/");
-    define('THEME_ROOT', ROOT . 'theme' . "/");
+    $config = [
+        'ROOT' => "http://localhost/~amin/blog",
+        'ADMIN_PATH' => "http://localhost/~amin/blog/admin",
+        'ADMIN_LOGIN_PATH' => "http://localhost/~amin/blog/admin/login",
+        'ASSETS_PATH' => "http://localhost/~amin/blog/assets",
+        'BLOG_NAME' => get_blog_name()
+    ];
 
-    define('BLOG_NAME', get_blog_name());
+    define('CONFIG', $config);
 
     function get_blog_name() {
         if (file_exists('uninstall.php')) {

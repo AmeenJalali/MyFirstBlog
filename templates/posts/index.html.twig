@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.post_title }}{% endblock %}
+
+{% block main %}
+    <div class="container">
+
+
+        <div>
+            <p><h1 class='text-center'>{{ post.post_title }}</h1></p>
+            {% if SESSION.logged_in == true %}
+                <a href="{{ CONFIG.ADMIN_PATH }}/editPost/{{ post.post_id }}" class="btn btn-xs btn-info">Edit</a>
+            {% endif %}
+            <p>Post id: {{ post.post_id }}, Published date: {{ post.post_published_date }}</p>
+            <p>{{ post.post_description }}</p>
+
+        </div>
+
+    <br>
+    <hr>
+    <br>
+
+    <h5>Comments:</h5>
+
+        {% if comments|length == 0 %}
+            No comment found
+        {% else %}
+            {% for comment in comments %}
+                <div>
+                    {{ comment.comment_author_name }} - {{ comment.comment_author_email }} - {{ comment.comment_published_date }}
+                    {% if SESSION.logged_in == true %}
+                        <a href="" data-comment-id="{{ comment.comment_id }}" class="delete-comment btn btn-xs btn-danger">Delete</a>
+                    {% endif %}
+                    <br>
+                    {{ comment.comment_description }}
+                    <br>
+                    <hr>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <br>
+        <br>
+        <br>
+    <div class="offset-sm-3 col-sm-6">
+        <form class="form-horizontal" action="" method="post">
+
+            <div class="form-group">
+                <label class="control-label" for="email">Your name:</label>
+                <input type="text" class="form-control" placeholder="Enter your name" name="comment_author">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="email">Your Email:</label>
+                <input type="text" class="form-control" placeholder="Enter your email address" name="comment_email">
+            </div>
+
+
+            <div class="form-group">
+                <label for="post_description">Comment:</label>
+                <textarea class="form-control" placeholder="Write your comment here" name="comment_description" rows="5"></textarea>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-12 text-center">
+                    <button type="submit" name="send" class="btn btn-outline-dark btn-lg">Send</button>
+                </div>
+            </div>
+
+        </form>
+
+        {% autoescape false %}
+            {% if errors|length != 0 %}
+                <div class="alert alert-danger" role="alert">{{ errors }}</div>
+
+            {% endif %}
+            {% if success|length != 0 %}
+                <div class="alert alert-success" role="alert">{{ success }}</div>
+            {% endif %}
+        {% endautoescape %}
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+    $(document).ready(function(){
+        $('.delete-comment').click(function(e){
+            e.preventDefault();
+            var commentID = $(this).attr('data-comment-id');
+            var parent = $(this).parent("div");
+            bootbox.dialog({
+                message: "Are you sure you want to delete this comment?",
+                title: "<i class='glyphicon glyphicon-trash'></i>",
+                buttons: {
+                    basic: {
+                        label: "No",
+                        className: "",
+                        callback: function() {
+                            $('.bootbox').modal('hide');
+                        }
+                    },
+                    danger: {
+                        label: "Yes, Delete it!",
+                        className: "btn-danger",
+                        callback: function() {
+                            $.ajax({
+                                type: 'POST',
+                                url: '{{ CONFIG.ROOT }}/posts/deleteComment/' + commentID
+                            })
+                                .done(function(){
+                                    parent.fadeOut('slow');
+                                })
+                                .fail(function(){
+                                    bootbox.alert('Error! Try again.');
+                                })
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
