@@ -1,27 +1,28 @@
 <?php
+
 namespace src\models;
 
 class InstallationModel {
 
-    public function create_database() {
+    public function createDatabase() {
         $sql = 'create database if not exists blog;';
         run_sql($sql);
     }
 
-    public function create_tables() {
+    public function createTables() {
         create_settings_table();
         create_users_table();
         create_posts_table();
         create_comments_table();
     }
 
-    public function create_admin($username, $email, $password) {
+    public function createAdmin($username, $email, $password) {
         $sql = 'insert into users (user_name, user_email, user_password) '.
             "values ('$username', '$email', '$password');";
         run_sql($sql);
     }
 
-    public function set_blog_name($blog_name) {
+    public function setBlogName($blog_name) {
         $sql = "insert into settings (blog_name) values ('$blog_name')";
         run_sql($sql);
     }

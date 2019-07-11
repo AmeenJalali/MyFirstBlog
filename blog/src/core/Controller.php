@@ -1,4 +1,5 @@
 <?php
+
 namespace src\core;
 
 use Twig\Environment;
@@ -9,17 +10,17 @@ class Controller {
     var $twig;
 
     public function __construct() {
-        $this->twig = $this->load_twig();
+        $this->twig = $this->loadTwig();
         $this->twig->addGlobal('SESSION', $_SESSION);
         $this->twig->addGlobal('CONFIG', CONFIG);
     }
 
-    public function twig_render($templateName, $data = []) {
+    public function twigRender($templateName, $data = []) {
         $fileName = $templateName . ".html.twig";
         echo $this->twig->render($fileName, $data);
     }
 
-    private function load_twig() {
+    private function loadTwig() {
         $twig_loader = new FilesystemLoader('templates');
         return new Environment($twig_loader);
     }

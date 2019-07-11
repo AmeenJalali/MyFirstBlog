@@ -1,4 +1,5 @@
 <?php
+
 namespace src\controllers;
 
 use src\core\Controller;
@@ -20,13 +21,13 @@ class Admin extends Controller {
         $postView = new PostView();
         $commentView = new CommentView();
 
-        $posts = $postView->get_all_posts();
-        $comments = $commentView->get_all_comments();
+        $posts = $postView->getAllPosts();
+        $comments = $commentView->getAllComments();
 
-        $this->twig_render('admin/index', ['posts' => $posts, 'comments' => $comments]);
+        $this->twigRender('admin/index', ['posts' => $posts, 'comments' => $comments]);
     }
 
-    public function newpost() {
+    public function newPost() {
         if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] == false) {
             header("location: " . CONFIG['ADMIN_LOGIN_PATH']);
             exit;
@@ -48,7 +49,7 @@ class Admin extends Controller {
                 if ($errors == "") {
                     $description = htmlspecialchars($_POST['post_description']);
                     $title = htmlspecialchars($_POST['post_title']);
-                    $postModel->new_post($title, $description);
+                    $postModel->newPost($title, $description);
                     $success .= "The post added successfully! <br>";
                     header( "refresh:1 ; url=" . CONFIG['ADMIN_PATH'] );
                 } else {
@@ -58,7 +59,7 @@ class Admin extends Controller {
             }
         }
 
-        $this->twig_render('admin/new_post', ['errors' => $errors, 'success' => $success]);
+        $this->twigRender('admin/new_post', ['errors' => $errors, 'success' => $success]);
     }
 
     public function deletePost($postID = '-1') {
@@ -68,7 +69,7 @@ class Admin extends Controller {
         }
         if ($postID != -1) {
             $postModel = new PostModel();
-            $postModel->delete_post_by_id($postID);
+            $postModel->deletePostById($postID);
         }
         header("location: " . CONFIG['ADMIN_PATH']);
         exit;
@@ -97,7 +98,7 @@ class Admin extends Controller {
                     if ($errors == "") {
                         $description = htmlspecialchars($_POST['post_description']);
                         $title = htmlspecialchars($_POST['post_title']);
-                        $postModel->edit_post($postID, $title, $description);
+                        $postModel->editPost($postID, $title, $description);
                         $success .= "The post edited successfully! <br>";
                         header( "refresh:1 ; url=" . CONFIG['ADMIN_PATH'] );
                     } else {
@@ -107,9 +108,9 @@ class Admin extends Controller {
                 }
             }
 
-            $post = $postView->get_post_by_id($postID);
+            $post = $postView->getPostById($postID);
             $post = $post[0];
-            $this->twig_render('admin/edit_post', ['post' => $post, 'errors' => $errors, 'success' => $success]);
+            $this->twigRender('admin/edit_post', ['post' => $post, 'errors' => $errors, 'success' => $success]);
 
         } else {
             header("location: " . CONFIG['ADMIN_PATH']);
@@ -137,7 +138,7 @@ class Admin extends Controller {
                 $password = validate($_POST["admin_password"]);
 
                 $userModel = new UserModel();
-                $is_valid = $userModel->user_is_valid($username, $password);
+                $is_valid = $userModel->userIsValid($username, $password);
 
                 if($is_valid) {
                     $_SESSION["logged_in"] = true;
@@ -150,7 +151,7 @@ class Admin extends Controller {
                 }
             }
         }
-        $this->twig_render('admin/login', ['errors' => $errors]);
+        $this->twigRender('admin/login', ['errors' => $errors]);
     }
 }
 

@@ -1,5 +1,7 @@
 <?php
+
 namespace src\controllers;
+
 use src\core\Controller;
 use src\models\InstallationModel;
 
@@ -36,10 +38,10 @@ class Installation extends Controller {
                         }
 
                         if ($error == "") {
-                            $installation->create_database();
-                            $installation->create_tables();
-                            $installation->set_blog_name($blog_name);
-                            $installation->create_admin($admin_username, $admin_email, $admin_password);
+                            $installation->createDatabase();
+                            $installation->createTables();
+                            $installation->setBlogName($blog_name);
+                            $installation->createAdmin($admin_username, $admin_email, $admin_password);
 
                             rename('install.php', 'uninstall.php');
                             header("location: " .  CONFIG['ADMIN_PATH']);
@@ -54,7 +56,7 @@ class Installation extends Controller {
             exit;
         }
 
-        $this->twig_render('installation/index', ['errors' => $error]);
+        $this->twigRender('installation/index', ['errors' => $error]);
     }
 
 }

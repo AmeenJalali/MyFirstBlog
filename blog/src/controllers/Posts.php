@@ -1,4 +1,5 @@
 <?php
+
 namespace src\controllers;
 
 use src\core\Controller;
@@ -15,12 +16,12 @@ class Posts extends Controller {
         exit;
     }
 
-    public function viewpost($postID = -1) {
+    public function viewPost($postID = -1) {
 
         $postView = new PostView();
         $commentModel = new CommentModel();
         $commentView = new CommentView();
-        $post = $postView->get_post_by_id($postID);
+        $post = $postView->getPostById($postID);
         $errors = "";
         $success = "";
 
@@ -55,7 +56,7 @@ class Posts extends Controller {
                     $description = htmlspecialchars($_POST['comment_description']);
                     $name = htmlspecialchars($_POST['comment_author']);
                     $email = htmlspecialchars($_POST['comment_email']);
-                    $commentModel->new_comment($name, $email, $description, $postID);
+                    $commentModel->newComment($name, $email, $description, $postID);
                     $success .= "Your comment sent successfully! <br>";
                 } else {
                     $errors .= "An error occurred, please try again <br>";
@@ -64,11 +65,11 @@ class Posts extends Controller {
             }
         }
 
-        $comments = $commentView->get_all_comments_by_postid($postID);
+        $comments = $commentView->getAllCommentsByPostId($postID);
 
         $post = $post[0];
 
-        $this->twig_render('posts/index', ['post' => $post, 'comments' => $comments, 'errors' => $errors, 'success' => $success]);
+        $this->twigRender('posts/index', ['post' => $post, 'comments' => $comments, 'errors' => $errors, 'success' => $success]);
     }
 
 
@@ -79,7 +80,7 @@ class Posts extends Controller {
         }
         if ($commentID != -1) {
             $commentModel = new CommentModel();
-            $commentModel->delete_comment_by_id($commentID);
+            $commentModel->deleteCommentById($commentID);
         }
     }
 

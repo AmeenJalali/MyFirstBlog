@@ -1,2 +1,2 @@
 <?php
-    header("location: " . ROOT);
+    header("location: " . CONFIG['ROOT']);

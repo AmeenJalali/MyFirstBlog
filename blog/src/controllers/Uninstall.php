@@ -1,5 +1,7 @@
 <?php
+
 namespace src\controllers;
+
 use src\core\Controller;
 use src\models\InstallationModel;
 
@@ -23,11 +25,7 @@ class Uninstall extends Controller {
             exit;
         }
 
-        $this->twig_render('installation/uninstall');
+        $this->twigRender('installation/uninstall');
     }
 
-}
-
-function validate($input) {
-    return trim(htmlspecialchars($input));
 }
