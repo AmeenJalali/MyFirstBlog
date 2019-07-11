@@ -33,13 +33,13 @@ class Routing
         }
     }
 
-    protected function parseUrl() {
+    private function parseUrl() {
         if (isset($_GET['url'])) {
             return explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL));
         }
     }
 
-    public function switchToInstallationController(): void {
+    private function switchToInstallationController(): void {
         $this->controller = 'installation';
         $this->method = 'index';
         $this->initController();
@@ -47,7 +47,7 @@ class Routing
     }
 
 
-    public function checkAndSetIfControllerExists(array $url) : array {
+    private function checkAndSetIfControllerExists(array $url) : array {
         if (file_exists("blog/src/controllers/$url[0].php")) {
             $this->controller = $url[0];
             unset($url[0]);
@@ -55,13 +55,13 @@ class Routing
         return $url;
     }
 
-    public function initController() {
+    private function initController() {
         $controller = "src\controllers\\" . $this->controller;
         $this->controller = new $controller;
     }
 
 
-    public function checkAndSetMethods(array $url) : array {
+    private function checkAndSetMethods(array $url) : array {
         if (isset($url[1])) {
             if (method_exists($this->controller, $url[1])) {
                 $this->method = $url[1];
@@ -71,7 +71,7 @@ class Routing
         return $url;
     }
 
-    public function checkAndSetParameters(array $url) : void {
+    private function checkAndSetParameters(array $url) : void {
         $this->params = $url ? array_values($url) : [];
     }
 }
