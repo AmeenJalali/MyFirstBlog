@@ -13,6 +13,7 @@ abstract class Mysqli implements DatabaseService {
             ->inTo($table)
             ->addValues($data)
             ->getSQL();
+
         $query = mysqli_query($connection, $sql);
         if (!$query) {
             die(mysqli_error($connection));
@@ -34,6 +35,7 @@ abstract class Mysqli implements DatabaseService {
                 ]
             )
             ->getSQL();
+
         $query = mysqli_query($connection, $sql);
         if (!$query) {
             die(mysqli_error($connection));
@@ -48,10 +50,12 @@ abstract class Mysqli implements DatabaseService {
         }
         close_database_connection($connection);
         return $data;
+
     }
 
     public static function update(string $table, int $id, array $data): bool {
         $connection = get_connection();
+
 
         $queryBuilder = new MysqliQueryBuilder;
 
