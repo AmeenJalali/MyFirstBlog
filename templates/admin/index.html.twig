@@ -13,30 +13,30 @@
                     No post found
                 {% else %}
                     {% for post in posts %}
-                        <div><a href="{{ CONFIG.ROOT }}/posts/viewpost/{{ post.post_id }}"><p><h3>{{ post.post_title }}</h3></a>
-                            <a href="{{ CONFIG.ADMIN_PATH }}/editpost/{{ post.post_id }}" class="btn btn-xs btn-info">Edit</a>
-                            <a href="" data-post-id="{{ post.post_id }}" class="delete-post btn btn-xs btn-danger">Delete</a>
+                        <div><a href="{{ CONFIG.ROOT }}/posts/viewpost/{{ post.id }}"><p><h3>{{ post.post_title }}</h3></a>
+                            <a href="{{ CONFIG.ADMIN_PATH }}/editpost/{{ post.id }}" class="btn btn-xs btn-info">Edit</a>
+                            <a href="" data-post-id="{{ post.id }}" class="delete-post btn btn-xs btn-danger">Delete</a>
                             </p>
-                            <p>Post id: {{ post.post_id }} , Published date: {{ post.post_published_date }}</p>
+                            <p>Post id: {{ post.id }} , Published date: {{ post.post_published_date }}</p>
                             <hr></div>
                     {% endfor %}
                 {% endif %}
-
             </div>
 
 
             <div class="col-6">
                 <h2 class="text-center">Last comments: </h2>
-                <div>
                 {% if comments|length == 0 %}
                 No comment found
                 {% else %}
                 {% for comment in comments %}
-                <p><b>Comment author: </b> {{ comment.comment_author_name }} - {{ comment.comment_author_email }}</p><p><b>Comment id:</b> {{ comment.comment_id }} - <b>Published date:</b> {{ comment.comment_published_date }}</p>
+                <div>
+                <p><b>Comment author: </b> {{ comment.comment_author_name }} - {{ comment.comment_author_email }}</p><p><b>Comment id:</b> {{ comment.id }} - <b>Published date:</b> {{ comment.comment_published_date }}</p>
                 <p><b>Comment: </b>{{ comment.comment_description }}</p>
-                <a href="" data-comment-id="{{ comment.comment_id }}" class="delete-comment btn btn-xs btn-danger">Delete</a><hr></div>
+                <a href="" data-comment-id="{{ comment.id }}" class="delete-comment btn btn-xs btn-danger">Delete</a><hr></div>
             {% endfor %}
             {% endif %}
+            </div>
 
         </div>
     </div>

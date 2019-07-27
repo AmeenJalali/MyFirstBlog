@@ -24,7 +24,7 @@
 
     function get_blog_name() {
         if (file_exists('uninstall.php')) {
-            $sql = "select blog_name from settings where blog_id=1;";
+            $sql = "select blog_name from settings where id=1;";
             $data = run_sql_with_return($sql);
             return $data[0]["blog_name"];
         } else {
