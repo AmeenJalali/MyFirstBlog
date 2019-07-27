@@ -5,7 +5,7 @@ function get_connection() {
         $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         return $connection;
     } catch (mysqli_sql_exception $e) {
-        echo("Unfortunately, the details you entered for connection are incorrect!");
+        die("Unfortunately, the details you entered for database connection are incorrect!");
     }
 }
 
@@ -31,8 +31,7 @@ function run_sql($sql) {
     close_database_connection($connection);
 }
 
-function run_sql_with_return($sql)
-{
+function run_sql_with_return($sql) {
     $connection = get_connection();
     if ($connection) {
         create_database_connection($connection);

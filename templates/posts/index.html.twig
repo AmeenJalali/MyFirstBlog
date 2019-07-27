@@ -9,9 +9,9 @@
         <div>
             <p><h1 class='text-center'>{{ post.post_title }}</h1></p>
             {% if SESSION.logged_in == true %}
-                <a href="{{ CONFIG.ADMIN_PATH }}/editPost/{{ post.post_id }}" class="btn btn-xs btn-info">Edit</a>
+                <a href="{{ CONFIG.ADMIN_PATH }}/editPost/{{ post.id }}" class="btn btn-xs btn-info">Edit</a>
             {% endif %}
-            <p>Post id: {{ post.post_id }}, Published date: {{ post.post_published_date }}</p>
+            <p>Post id: {{ post.id }}, Published date: {{ post.post_published_date }}</p>
             <p>{{ post.post_description }}</p>
 
         </div>
@@ -29,7 +29,7 @@
                 <div>
                     {{ comment.comment_author_name }} - {{ comment.comment_author_email }} - {{ comment.comment_published_date }}
                     {% if SESSION.logged_in == true %}
-                        <a href="" data-comment-id="{{ comment.comment_id }}" class="delete-comment btn btn-xs btn-danger">Delete</a>
+                        <a href="" data-comment-id="{{ comment.id }}" class="delete-comment btn btn-xs btn-danger">Delete</a>
                     {% endif %}
                     <br>
                     {{ comment.comment_description }}
