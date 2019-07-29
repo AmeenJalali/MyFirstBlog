@@ -13,10 +13,10 @@
     ini_set('display_errors', 'On');
 
     $config = [
-        'ROOT' => "http://localhost/~amin/blog",
-        'ADMIN_PATH' => "http://localhost/~amin/blog/admin",
-        'ADMIN_LOGIN_PATH' => "http://localhost/~amin/blog/admin/login",
-        'ASSETS_PATH' => "http://localhost/~amin/blog/assets",
+        'ROOT' => "http://localhost/blog",
+        'ADMIN_PATH' => "http://localhost/blog/admin",
+        'ADMIN_LOGIN_PATH' => "http://localhost/blog/admin/login",
+        'ASSETS_PATH' => "http://localhost/blog/assets",
         'BLOG_NAME' => get_blog_name()
     ];
 
@@ -25,7 +25,7 @@
     function get_blog_name() {
         if (file_exists('uninstall.php')) {
             $sql = "select blog_name from settings where id=1;";
-            $data = run_sql_with_return($sql);
+            $data = \src\services\database\MySQLi::execute($sql);
             return $data[0]["blog_name"];
         } else {
             return "Your blog name";

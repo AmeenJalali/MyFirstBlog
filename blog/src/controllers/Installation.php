@@ -12,7 +12,7 @@ class Installation extends Controller {
         $installation = new InstallationModel();
         $error = "";
 
-        if (!$installation->installed()) {
+        if (file_exists('install.php')) {
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

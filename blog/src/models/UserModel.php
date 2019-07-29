@@ -2,19 +2,18 @@
 
 namespace src\models;
 
-use src\services\database\Mysqli;
-use src\services\database\MysqliQueryBuilder;
+use src\services\database\MySQLi;
+use src\services\database\MySQLiQueryBuilder;
 
 class UserModel {
 
     public function userIsValid($username, $password): bool {
-//        $sql = "select user_name, user_password from users where id=1";
-        $queryBuilder = new MysqliQueryBuilder;
+        $queryBuilder = new MySQLiQueryBuilder;
         $sql = $queryBuilder->select('user_name', 'user_password')
             ->from('users')
             ->where('id=1')
             ->getSQL();
-        $userInformation = Mysqli::execute($sql);
+        $userInformation = MySQLi::execute($sql);
         if ($userInformation[0]['user_name'] == $username) {
             if (password_verify($password, $userInformation[0]['user_password'])) {
                 return true;

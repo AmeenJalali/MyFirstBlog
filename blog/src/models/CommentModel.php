@@ -2,18 +2,12 @@
 
 namespace src\models;
 
-use src\services\database\Mysqli;
+use src\services\database\MySQLi;
 
 class CommentModel {
 
     public function newComment($author, $email, $comment, $postID) {
-//        $date = date('Y-m-d H:i:s');
-//        $sql = "insert into comments (comment_author_name, comment_author_email, comment_description, comment_published_date, post_id) values ('$author', '$email', '$comment', '$date', '$postID')";
-//        run_sql($sql);
-
-
         $date = date('Y-m-d H:i:s');
-
         $data = [
             'comment_author_name' => $author,
             'comment_author_email' => $email,
@@ -22,14 +16,11 @@ class CommentModel {
             'post_id' => $postID
         ];
 
-        Mysqli::insert('comments', $data);
-
+        MySQLi::insert('comments', $data);
     }
 
     public function deleteCommentById($commentID) {
-//        $sql = "delete from comments where id=$commentID";
-//        run_sql($sql);
-        Mysqli::delete('comments', $commentID);
+        MySQLi::delete('comments', $commentID);
     }
 
 }

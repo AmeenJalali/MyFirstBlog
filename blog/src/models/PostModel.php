@@ -2,8 +2,8 @@
 
 namespace src\models;
 
-use src\services\database\Mysqli;
-use src\services\database\MysqliQueryBuilder;
+use src\services\database\MySQLi;
+use src\services\database\MySQLiQueryBuilder;
 
 class PostModel {
 
@@ -16,16 +16,11 @@ class PostModel {
           'post_published_date' => $date
         ];
 
-        Mysqli::insert('posts', $data);
-
-//        $sql = "insert into posts (post_title, post_description, post_published_date) values ('$title', '$description', '$date')";
-//        run_sql($sql);
+        MySQLi::insert('posts', $data);
     }
 
     public function editPost($postID, $title, $description) {
         $date = date('Y-m-d H:i:s');
-//        $sql = "update posts set post_title='$title', post_description='$description', post_published_date='$date' where id=$postID";
-//        run_sql($sql);
 
         $data = [
           'post_title' => $title,
@@ -33,15 +28,15 @@ class PostModel {
           'post_published_date' => $date
         ];
 
-        Mysqli::update('posts', $postID, $data);
+        MySQLi::update('posts', $postID, $data);
 
     }
 
     public function deletePostById($postID) {
 
-        Mysqli::delete('posts', $postID);
+        MySQLi::delete('posts', $postID);
 
-        $queryBuilder = new MysqliQueryBuilder;
+        $queryBuilder = new MySQLiQueryBuilder;
         $sql = $queryBuilder->delete('comments')
             ->where(
                 [
@@ -50,12 +45,7 @@ class PostModel {
             )
             ->getSQL();
 
-        Mysqli::execute($sql);
-
-//        $sql = "delete from posts where id=$postID";
-//        run_sql($sql);
-//        $sql = "delete from comments where post_id=$postID";
-//        run_sql($sql);
+        MySQLi::execute($sql);
     }
 
 }

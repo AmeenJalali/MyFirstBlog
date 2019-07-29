@@ -11,14 +11,14 @@
             No posts found
         {% else %}
             {% for post in posts %}
-            <div>
+            <div class="post-block">
                 <p><h3> <a href="{{ CONFIG.ROOT }}/posts/viewpost/{{ post.id }}">{{ post.post_title }}</a></h3></p>
-                <div class="row text-secondary">
+                <div class="row text-secondary small-txt">
                     <div class="col-2"><p><i class="far fa-clipboard"></i> Post id: {{ post.id }}</div>
                     <div class="col-10"><i class="far fa-calendar-alt"></i> Published date: &nbsp {{ post.post_published_date }}</div></p>
                 </div>
                 <p> {{ post.post_description|slice(0,700) }} </p>
-                <i class="fas fa-angle-right"></i> <a href="{{ CONFIG.ROOT }}/posts/viewpost/{{ post.id }}">Read more</a>
+                <i class="fas fa-angle-right small-txt"></i> <a class="small-txt read-more" href="{{ CONFIG.ROOT }}/posts/viewpost/{{ post.id }}">Read more</a>
                 <hr>
             </div>
             {% endfor %}

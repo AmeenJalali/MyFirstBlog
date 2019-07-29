@@ -8,3 +8,12 @@ main {
     line-height: .5 !important;
     border-radius: .2rem !important;
 }
+.small-txt {
+    font-size: .8em;
+}
+.post-block i {
+    color: #6c757d;
+}
+.post-block a.read-more {
+    color: #6c757d;
+}

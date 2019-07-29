@@ -4,11 +4,11 @@ namespace src\services\database;
 
 use mysqli_sql_exception;
 
-abstract class Mysqli implements DatabaseService {
+abstract class MySQLi implements DatabaseService {
 
     public static function insert(string $table, array $data): int {
         $connection = get_connection();
-        $queryBuilder = new MysqliQueryBuilder;
+        $queryBuilder = new MySQLiQueryBuilder;
         $sql = $queryBuilder->insert()
             ->inTo($table)
             ->addValues($data)
@@ -26,7 +26,7 @@ abstract class Mysqli implements DatabaseService {
     public static function select(string $table, int $id) : array {
         $connection = get_connection();
 
-        $queryBuilder = new MysqliQueryBuilder;
+        $queryBuilder = new MySQLiQueryBuilder;
         $sql = $queryBuilder->select()
             ->from($table)
             ->where(
@@ -56,8 +56,7 @@ abstract class Mysqli implements DatabaseService {
     public static function update(string $table, int $id, array $data): bool {
         $connection = get_connection();
 
-
-        $queryBuilder = new MysqliQueryBuilder;
+        $queryBuilder = new MySQLiQueryBuilder;
 
         $sql = $queryBuilder->update($table)
             ->set($data)
@@ -79,7 +78,7 @@ abstract class Mysqli implements DatabaseService {
     public static function delete(string $table, int $id): bool {
         $connection = get_connection();
 
-        $queryBuilder = new MysqliQueryBuilder;
+        $queryBuilder = new MySQLiQueryBuilder;
 
         $sql = $queryBuilder->delete($table)
             ->where(
@@ -123,6 +122,11 @@ abstract class Mysqli implements DatabaseService {
     }
 }
 
+function create_database_connection($connection) {
+    if (!$connection) {
+        die('Error - Couldn\'t connect to database.');
+    }
+}
 
 function get_connection() {
     try {

@@ -16,7 +16,6 @@
             "src\\": "blog/src/"
         },
         "files": [
-            "include/database.php",
             "include/config.php"
         ]
     }

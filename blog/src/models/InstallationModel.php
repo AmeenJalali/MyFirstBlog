@@ -2,14 +2,14 @@
 
 namespace src\models;
 
-use src\services\database\Mysqli;
+use src\services\database\MySQLi;
+use src\services\database\MySQLiQueryBuilder;
 
 class InstallationModel {
 
     public function createDatabase() {
         $sql = 'CREATE DATABASE IF NOT EXISTS blog;';
-        Mysqli::execute($sql);
-//        run_sql($sql);
+        MySQLi::execute($sql);
     }
 
     public function createTables() {
@@ -20,37 +20,24 @@ class InstallationModel {
     }
 
     public function createAdmin($username, $email, $password) {
-//        $sql = 'insert into users (user_name, user_email, user_password) '.
-//            "values ('$username', '$email', '$password');";
-//        run_sql($sql);
-
         $data = [
           'user_name' => $username,
           'user_email' => $email,
           'user_password' => $password
         ];
-        Mysqli::insert('users', $data);
-
+        MySQLi::insert('users', $data);
     }
 
     public function setBlogName($blog_name) {
-//        $sql = "insert into settings (blog_name) values ('$blog_name')";
-//        run_sql($sql);
         $data = [
           'blog_name' => $blog_name
         ];
-        Mysqli::insert('settings', $data);
-    }
-
-    public function installed(): bool {
-        $sql = 'select count(*) from settings where id=1;';
-        return sql_count($sql) != 0;
+        MySQLi::insert('settings', $data);
     }
 
     public function removal() {
         $sql = "drop table if exists settings, posts, users, comments;";
-//        run_sql($sql);
-        Mysqli::execute($sql);
+        MySQLi::execute($sql);
     }
 }
 
@@ -59,8 +46,7 @@ function create_settings_table() {
         'id int not null auto_increment,'.
         'blog_name varchar(255) not null,'.
         'primary key (id));';
-    Mysqli::execute($sql);
-//    run_sql($sql);
+    MySQLi::execute($sql);
 }
 
 function create_users_table() {
@@ -70,8 +56,7 @@ function create_users_table() {
         'user_email varchar(255) not null,' .
         'user_password varchar(255) not null,' .
         'primary key (id));';
-    Mysqli::execute($sql);
-//    run_sql($sql);
+    MySQLi::execute($sql);
 }
 
 function create_posts_table() {
@@ -81,8 +66,7 @@ function create_posts_table() {
         'post_description text not null,' .
         'post_published_date datetime not null,' .
         'primary key (id));';
-//    run_sql($sql);
-    Mysqli::execute($sql);
+    MySQLi::execute($sql);
 }
 
 function create_comments_table() {
@@ -94,6 +78,5 @@ function create_comments_table() {
         'comment_description text not null,' .
         'post_id int not null,' .
         'primary key (id));';
-//    run_sql($sql);
-    Mysqli::execute($sql);
+    MySQLi::execute($sql);
 }

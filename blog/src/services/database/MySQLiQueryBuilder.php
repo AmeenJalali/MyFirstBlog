@@ -3,7 +3,7 @@
 namespace src\services\database;
 
 
-class MysqliQueryBuilder {
+class MySQLiQueryBuilder {
 
     private const INSERT = 0;
     private const SELECT = 1;

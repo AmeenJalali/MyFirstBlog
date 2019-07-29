@@ -11,7 +11,7 @@ class Uninstall extends Controller {
     public function index() {
         $installation = new InstallationModel();
 
-        if ($installation->installed() && file_exists('uninstall.php')) {
+        if (file_exists('uninstall.php')) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $installation->removal();
                     $_SESSION = array();
